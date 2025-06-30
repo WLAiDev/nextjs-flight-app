@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Step2Page() {
-  const { customerNumber, step } = useRegistration();
+  const { customerNumber } = useRegistration();
   const router = useRouter();
 
   useEffect(() => {

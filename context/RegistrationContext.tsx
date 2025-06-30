@@ -1,5 +1,5 @@
 "use client";
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 type FlightDetail = { date: string; flightNo: string };
@@ -41,9 +41,25 @@ export function RegistrationProvider({ children }: { children: React.ReactNode }
   });
 
   const router = useRouter();
-
+  
+  // Load saved state on mount
+  useEffect(() => {
+    const savedCustomerNumber = localStorage.getItem("customerNumber");
+    const savedStep = localStorage.getItem("currentStep");
+    if (savedCustomerNumber) {
+      setCustomerNumberState(savedCustomerNumber);
+      if (savedStep) {
+        const stepNumber = parseInt(savedStep, 10);
+        setStepState(stepNumber);
+        if (stepNumber > 1) {
+          router.push(`/steps/${stepNumber}`);
+        }
+      }
+    }
+  }, [router]);
   function setStep(n: number) {
     setStepState(n);
+    localStorage.setItem("currentStep", n.toString());
     if (n === 1) {
       router.push("/");
     } else {
@@ -54,14 +70,15 @@ export function RegistrationProvider({ children }: { children: React.ReactNode }
   function goToNextStep() {
     const nextStep = step + 1;
     setStepState(nextStep);
+    localStorage.setItem("currentStep", nextStep.toString());
     router.push(`/steps/${nextStep}`);
   }
 
   function setCustomerNumberWithRedirect(number: string) {
     setCustomerNumberState(number);
     localStorage.setItem("customerNumber", number);
-    // setStepState(2); // Set the step first
-    router.push('/steps/2'); // Then redirect
+    setStepState(2);
+    localStorage.setItem("currentStep", "2");    router.push('/steps/2'); // Then redirect
   }
 
   function resetAll() {
@@ -75,6 +92,8 @@ export function RegistrationProvider({ children }: { children: React.ReactNode }
       countryCode: "+1",
       phone: "",
     });
+    localStorage.removeItem("customerNumber");
+    localStorage.removeItem("currentStep");
     router.push("/");
   }
 
