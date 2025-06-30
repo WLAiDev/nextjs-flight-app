@@ -1,0 +1,17 @@
+.footer {
+  background: #222;
+  color: #fff;
+  padding: 1rem 2rem;
+  font-size: 0.95rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer a {
+  color: #e00;
+  text-decoration: underline;
+  margin: 0 0.2rem;
+}
+.info {
+  opacity: 0.7;
+}

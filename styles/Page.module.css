@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 2.5rem 4vw;
+}
+.contentArea {
+  flex: 1;
+  min-width: 380px;
+  max-width: 650px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  padding: 2rem 2.2rem 2.5rem 2.2rem;
+  margin-right: 2.8rem;
+}
+@media (max-width: 900px) {
+  .container {
+    flex-direction: column;
+    margin: 1rem 1vw;
+  }
+  .contentArea {
+    margin-right: 0;
+    margin-bottom: 1.5rem;
+  }
+}
